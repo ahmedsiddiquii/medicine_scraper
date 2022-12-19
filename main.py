@@ -7,16 +7,18 @@ with open("output.csv","w",encoding="utf-8") as file:
     writer=csv.writer(file)
     writer.writerow(["National no","Registration number entered in the RU","Medicine","	PRU","ATC","INN","Relax mode","Status",
                      "Date of update"])
-
-
-def process(i,page):
-    link = i
-
+browsers=[]
+def initiate_browsers():
+    global browsers
     options = Options()
     options.add_argument("--lang={}".format("en"))
-    #ajaj
+    driver = webdriver.Chrome("chromedriver", chrome_options=options)
+    browsers.append(driver)
 
-    driver = webdriver.Chrome("chromedriver",chrome_options=options)
+def process(i,page,driver):
+    link = i
+
+
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
     pagination = driver.find_elements(by="xpath", value="//span[@class='rf-ds ']//a")
@@ -44,10 +46,21 @@ def process(i,page):
         writer = csv.writer(file)
         writer.writerow(temp)
     # input()
+
+threads=[]
+for i in range(0,4):
+    s=threading.Thread(target=initiate_browsers)
+    s.start()
+    threads.append(s)
+for t in threads:
+    t.join()
+
+
+
 for page in range(0,5000):
     all_threads=[]
     for i in range(0,4):
-        s=threading.Thread(target=process,args=(i,page,))
+        s=threading.Thread(target=process,args=(i,page,browsers[i]))
         s.start()
         all_threads.append(s)
     for ss in all_threads:
