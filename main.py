@@ -10,17 +10,24 @@ with open("output.csv","w",encoding="utf-8") as file:
 browsers=[]
 def initiate_browsers():
     global browsers
+    prefs = {
+        "translate_whitelists": {"bg": "en"},
+        "translate": {"enabled": "true"}
+    }
     options = Options()
     options.add_argument("--lang={}".format("en"))
+    options.add_experimental_option("prefs", prefs)
     driver = webdriver.Chrome("chromedriver", chrome_options=options)
+    driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
     browsers.append(driver)
 
 def process(i,page,driver):
     link = i
 
 
+
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
-    driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
+    sleep(4)
     pagination = driver.find_elements(by="xpath", value="//span[@class='rf-ds ']//a")
     for p in pagination:
         if p.text == str(page):
