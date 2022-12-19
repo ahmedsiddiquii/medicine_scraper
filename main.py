@@ -27,12 +27,12 @@ def process(i,page,driver):
 
 
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
-    sleep(4)
+    sleep(7)
     pagination = driver.find_elements(by="xpath", value="//span[@class='rf-ds ']//a")
     for p in pagination:
         if p.text == str(page):
             p.click()
-    sleep(5)
+    sleep(7)
     table = driver.find_element(by="xpath", value="//tbody[@id='medicamentSearchForm:resultRegisterOneTable:tb']")
     trs = table.find_elements(by="tag name", value="tr")[link]
     cells=trs.find_elements(by="tag name",value="td")
