@@ -83,7 +83,7 @@ def process(i, page, driver):
 
     with open("output.csv", "a", encoding="utf-8") as file:
         writer = csv.writer(file)
-        #temp will add heere
+        #temp will add here
         writer.writerow((National_identification_number, identifier, authorization_number, parallel_import_decison,
                          date_of_decision, international_nonproprietary, anatomical_therapeutic, authorization_holder,
                          producer, pharmaceutical_form, quantity_of_active, final_packing, medicament_type,
