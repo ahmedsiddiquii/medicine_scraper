@@ -1,9 +1,14 @@
 from selenium import webdriver
 from time import sleep
 import threading
-page=2
+import csv
+with open("output.csv","w",encoding="utf-8") as file:
+    writer=csv.writer(file)
+    writer.writerow(["National no","Registration number entered in the RU","Medicine","	PRU","ATC","INN","Relax mode","Status",
+                     "Date of update"])
 
-def process(i):
+
+def process(i,page):
     link = i
 
     driver = webdriver.Chrome("chromedriver")
@@ -22,12 +27,23 @@ def process(i):
         temp.append(cell.text)
     print(temp)
 
+
     a = trs.find_element(by="tag name", value="a")
     a.click()
 
-    #moin code goes here
-    input()
 
-for i in range(0,2):
-    s=threading.Thread(target=process,args=(i,))
-    s.start()
+
+    #moin code goes here
+
+    with open("output.csv", "a", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(temp)
+    # input()
+for page in range(0,5000):
+    all_threads=[]
+    for i in range(0,4):
+        s=threading.Thread(target=process,args=(i,page,))
+        s.start()
+        all_threads.append(s)
+    for ss in all_threads:
+        ss.join()
