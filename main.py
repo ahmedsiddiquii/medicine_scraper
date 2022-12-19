@@ -2,6 +2,7 @@ from selenium import webdriver
 from time import sleep
 import threading
 import csv
+from selenium.webdriver.chrome.options import Options
 with open("output.csv","w",encoding="utf-8") as file:
     writer=csv.writer(file)
     writer.writerow(["National no","Registration number entered in the RU","Medicine","	PRU","ATC","INN","Relax mode","Status",
@@ -11,7 +12,10 @@ with open("output.csv","w",encoding="utf-8") as file:
 def process(i,page):
     link = i
 
-    driver = webdriver.Chrome("chromedriver")
+    options = Options()
+    options.add_argument("--lang={}".format("en"))
+
+    driver = webdriver.Chrome("chromedriver",chrome_options=options)
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
     pagination = driver.find_elements(by="xpath", value="//span[@class='rf-ds ']//a")
