@@ -14,6 +14,7 @@ def process(i,page):
 
     options = Options()
     options.add_argument("--lang={}".format("en"))
+    #ajaj
 
     driver = webdriver.Chrome("chromedriver",chrome_options=options)
     driver.get("https://portal.ncpr.bg/registers/pages/register/list-medicament7.xhtml")
