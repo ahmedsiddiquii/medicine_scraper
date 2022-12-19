@@ -24,6 +24,8 @@ def process(i):
 
     a = trs.find_element(by="tag name", value="a")
     a.click()
+
+    #moin code goes here
     input()
 
 for i in range(0,2):
